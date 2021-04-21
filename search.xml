@@ -364,6 +364,133 @@
       </tags>
   </entry>
   <entry>
+    <title>vue mixin</title>
+    <url>/2021/04/20/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/mixin/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p><strong>一个混入对象可以包含任意组件选项。当组件使用混入对象时，所有混入对象的选项将被“混合”进入该组件本身的选项。</strong></p>
+<h4 id="混入选项的合并"><a href="#混入选项的合并" class="headerlink" title="混入选项的合并"></a>混入选项的合并</h4><p>当组件和混入对象含有同名选项时，这些选项将以恰当的方式进行“合并”。</p>
+<blockquote>
+<p>data 混入<br>data 混入会在被混入组件内 data 进行递归合并，并在命名冲突是以被混入数据优先。</p>
+</blockquote>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">var mixin = &#123;</span><br><span class="line">  dat<span class="variable">a:</span> <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      message: <span class="string">&#x27;hello&#x27;</span>,</span><br><span class="line">      foo: <span class="string">&#x27;abc&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  mixin<span class="variable">s:</span> [mixin],</span><br><span class="line">  dat<span class="variable">a:</span> <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      message: <span class="string">&#x27;goodbye&#x27;</span>,</span><br><span class="line">      bar: <span class="string">&#x27;def&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created: <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">    console.<span class="built_in">log</span>(this.$data)</span><br><span class="line">    // =&gt; &#123; message: <span class="string">&quot;goodbye&quot;</span>, foo: <span class="string">&quot;abc&quot;</span>, bar: <span class="string">&quot;def&quot;</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>钩子混入<br>对于 created,mounted 等钩子来说，被混入的组件会将同名钩子合并为一个数组，它们都会被调用，混入的钩子先调用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> mixin = &#123;</span><br><span class="line">  created: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;混入对象的钩子被调用&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  mixins: [mixin],</span><br><span class="line">  created: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;组件钩子被调用&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; &quot;混入对象的钩子被调用&quot;</span></span><br><span class="line"><span class="comment">// =&gt; &quot;组件钩子被调用&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对于 methods，computed 等其他选项类似于 data 的混入，被合并为一个对象，存在命名冲突已被混入的组件原命名为准</p>
+</blockquote>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">var mixin = &#123;</span><br><span class="line">  method<span class="variable">s:</span> &#123;</span><br><span class="line">    foo: <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">      console.<span class="built_in">log</span>(<span class="string">&#x27;foo&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    conflictin<span class="variable">g:</span> <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">      console.<span class="built_in">log</span>(<span class="string">&#x27;from mixin&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var <span class="keyword">vm</span> = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  mixin<span class="variable">s:</span> [mixin],</span><br><span class="line">  method<span class="variable">s:</span> &#123;</span><br><span class="line">    bar: <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">      console.<span class="built_in">log</span>(<span class="string">&#x27;bar&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    conflictin<span class="variable">g:</span> <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">      console.<span class="built_in">log</span>(<span class="string">&#x27;from self&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">vm</span>.foo() // =&gt; <span class="string">&quot;foo&quot;</span></span><br><span class="line"><span class="keyword">vm</span>.bar() // =&gt; <span class="string">&quot;bar&quot;</span></span><br><span class="line"><span class="keyword">vm</span>.conflicting() // =&gt; <span class="string">&quot;from self&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="全局混入"><a href="#全局混入" class="headerlink" title="全局混入"></a>全局混入</h4><p><strong>混入也可以进行全局注册。使用时格外小心！一旦使用全局混入，它将影响每一个之后创建的 Vue 实例。</strong></p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span> 为自定义的选项 <span class="string">&#x27;myOption&#x27;</span> 注入一个处理器。</span><br><span class="line">Vue.mixin(&#123;</span><br><span class="line">  created: <span class="keyword">function</span> () &#123;</span><br><span class="line">    var myOption = this.<span class="variable">$options</span>.myOption</span><br><span class="line">    <span class="keyword">if</span> (myOption) &#123;</span><br><span class="line">      console.log(myOption)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">  myOption: <span class="string">&#x27;hello!&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="regexp">//</span> =&gt; <span class="string">&quot;hello!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义选项合并策略"><a href="#自定义选项合并策略" class="headerlink" title="自定义选项合并策略"></a>自定义选项合并策略</h4><p>暂时没有使用过这样的场景，目前使用到混入的没有涉及</p>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue自定义指令</title>
+    <url>/2021/04/20/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="自定义指令注册及使用"><a href="#自定义指令注册及使用" class="headerlink" title="自定义指令注册及使用"></a>自定义指令注册及使用</h3><blockquote>
+<p>全局注册</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span> 注册一个全局自定义指令 `v-focus`</span><br><span class="line">Vue.directive(<span class="string">&#x27;focus&#x27;</span>, &#123;</span><br><span class="line">  <span class="regexp">//</span> 当被绑定的元素插入到 DOM 中时……</span><br><span class="line">  inserted: <span class="keyword">function</span> (el) &#123;</span><br><span class="line">    <span class="regexp">//</span> 聚焦元素</span><br><span class="line">    el.focus()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>局部注册</p>
+</blockquote>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">directive<span class="variable">s:</span> &#123;</span><br><span class="line">  focu<span class="variable">s:</span> &#123;</span><br><span class="line">    // 指令的定义</span><br><span class="line">    inserted: <span class="function"><span class="keyword">function</span> <span class="params">(el)</span> &#123;</span></span><br><span class="line">      <span class="keyword">el</span>.focus()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用自定义指令</p>
+</blockquote>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="section">&lt;input v-focus&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义指令钩子-均为可选"><a href="#自定义指令钩子-均为可选" class="headerlink" title="自定义指令钩子(均为可选)"></a>自定义指令钩子(均为可选)</h3><ul>
+<li>bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置</li>
+<li>inserted：被绑定元素插入父节点时调用 (父节点存在，但不一定已被插入文档中)</li>
+<li>update：所在组件的 VNode 更新时调用</li>
+<li>componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用</li>
+<li>unbind：只调用一次，指令与元素解绑时调用</li>
+</ul>
+<h4 id="钩子函数参数"><a href="#钩子函数参数" class="headerlink" title="钩子函数参数"></a>钩子函数参数</h4><ul>
+<li><p>el：指令所绑定的元素，可以用来直接操作 DOM。</p>
+</li>
+<li><p>binding：一个对象，包含以下 property</p>
+<ul>
+<li>name：指令名，不包括 v- 前缀。</li>
+<li>value：指令的绑定值. v-focus=”1+1” 中，绑定值为 2 ; 绑定多个值，写为对象字面量 {a:1,b:2}。value 可以接受合法的任何 js 表达式。可以</li>
+<li>expression：字符串形式的指令表达式. v-focus=”1+1” 中，表达式为 1+1</li>
+<li>arg：传给指令的参数，可选。 v-focus:a ，参数为 a , 也可以使用动态参数 v-focus:[a]</li>
+<li>modifiers：一个包含修饰符的对象。 v-focus:a.b 修饰符对象为 {a:true,b:false}</li>
+<li>oldValue：指令绑定的前一个值，仅在 update 和 componentUpdated 钩子中可用。无论值是否改变都可用。</li>
+</ul>
+</li>
+<li><p>vnode：Vue 编译生成的虚拟节点。</p>
+</li>
+<li><p>oldVnode：上一个虚拟节点，仅在 update 和 componentUpdated 钩子中可用。</p>
+</li>
+</ul>
+<p><strong>动态参数的一个例子</strong></p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">id</span>=<span class="string">&quot;dynamicexample&quot;</span>&gt;</span><br><span class="line">  &lt;h3&gt;Scroll down inside this section ↓&lt;/h3&gt;</span><br><span class="line">  &lt;p v-pin:[direction]=<span class="string">&quot;200&quot;</span>&gt;I am pinned <span class="keyword">onto</span> <span class="keyword">the</span> page <span class="keyword">at</span> <span class="number">200</span>px <span class="keyword">to</span> <span class="keyword">the</span> left.&lt;/p&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">Vue.directive(<span class="string">&#x27;pin&#x27;</span>, &#123;</span><br><span class="line">  bind: <span class="function"><span class="keyword">function</span> <span class="params">(el, binding, vnode)</span> &#123;</span></span><br><span class="line">    <span class="keyword">el</span>.style.position = <span class="string">&#x27;fixed&#x27;</span></span><br><span class="line">    var s = (binding.arg == <span class="string">&#x27;left&#x27;</span> ? <span class="string">&#x27;left&#x27;</span> : <span class="string">&#x27;top&#x27;</span>)</span><br><span class="line">    <span class="keyword">el</span>.style[s] = binding.value + <span class="string">&#x27;px&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  <span class="keyword">e</span><span class="variable">l:</span> <span class="string">&#x27;#dynamicexample&#x27;</span>,</span><br><span class="line">  dat<span class="variable">a:</span> <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      direction: <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>filter</title>
+    <url>/2021/04/20/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/%E8%BF%87%E6%BB%A4%E5%99%A8/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="过滤器使用"><a href="#过滤器使用" class="headerlink" title="过滤器使用"></a>过滤器使用</h3><figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="comment">&lt;!-- 在双花括号中 --&gt;</span></span></span><br><span class="line"><span class="template-variable">&#123;&#123; <span class="name">message</span> | filter1 &#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- 过滤器可以串联 --&gt;</span></span></span><br><span class="line"><span class="template-variable">&#123;&#123; <span class="name">message</span> | filter1 | filter2 &#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- 在 `v-bind` 中 --&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;rawId | filter1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="局部过滤"><a href="#局部过滤" class="headerlink" title="局部过滤"></a>局部过滤</h4><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="built_in">filter</span><span class="variable">s:</span> &#123;</span><br><span class="line">  filter1: <span class="function"><span class="keyword">function</span> <span class="params">(value)</span> &#123;</span></span><br><span class="line">    <span class="keyword">if</span> (!value) <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">    value = value.toString()</span><br><span class="line">    <span class="keyword">return</span> value.charAt(<span class="number">0</span>).toUpperCase() + value.slice(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  filter2: <span class="function"><span class="keyword">function</span> <span class="params">(value)</span> &#123;</span></span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局过滤"><a href="#全局过滤" class="headerlink" title="全局过滤"></a>全局过滤</h3><figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">Vue.filter(<span class="string">&#x27;filter1&#x27;</span>, <span class="function"><span class="keyword">function</span> <span class="params">(value)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!value) <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  value = value.toString()</span><br><span class="line">  <span class="keyword">return</span> value.charAt(<span class="number">0</span>).toUpperCase() + value.slice(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>存在全局和局部过滤器命名冲突，优先使用局部过滤器</strong></p>
+<h3 id="过滤器参数"><a href="#过滤器参数" class="headerlink" title="过滤器参数"></a>过滤器参数</h3><blockquote>
+<p>第一个参数</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span>html</span><br><span class="line">&#123;&#123; message | filter1 &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>js</span><br><span class="line">filters:&#123;</span><br><span class="line">  filter1(arg)&#123;</span><br><span class="line">    <span class="regexp">//</span>arg就是message本身</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>第二个参数</p>
+</blockquote>
+<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="xml">//html</span></span><br><span class="line"><span class="template-variable">&#123;&#123; <span class="name">message</span> | filter1(<span class="name">arg1</span>) &#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml">//js</span></span><br><span class="line"><span class="xml">filters:&#123;</span></span><br><span class="line"><span class="xml">  filter1(arg,arg1)&#123;</span></span><br><span class="line"></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>第三个参数</p>
+</blockquote>
+<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="xml">//html</span></span><br><span class="line"><span class="template-variable">&#123;&#123; <span class="name">message</span> | filter1(<span class="name">arg1</span>,arg2) &#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml">//js</span></span><br><span class="line"><span class="xml">filters:&#123;</span></span><br><span class="line"><span class="xml">  filter1(arg,arg1,arg2)&#123;</span></span><br><span class="line"></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>vue3 移除了过滤器官方给出的解释是</p>
+<blockquote>
+<p>尽管这似乎很方便，但是它需要一种自定义语法，该语法打破了花括号内的表达式只是“ JavaScript”的假设，这既有学习成本，也有实现成本。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JS常用方法整理</title>
     <url>/2021/04/11/%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="Array"><a href="#Array" class="headerlink" title="Array:"></a>Array:</h3><p>slice(start,end) 从索引为 start 的开始取，取到索引为 end 的为止，end 的取不到, 如果 end 为负数，表示索引为数组的长度+负数.<br>toString() 把数组转换成字符串，每一项用,分割<br>valueOf() 返回数组对象本身</p>
@@ -380,6 +507,184 @@
       </categories>
       <tags>
         <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue响应式原理</title>
+    <url>/2021/04/20/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 Object.defineProperty 把这些 property 全部转为 getter/setter。<br>每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把“接触”过的数据 property 记录为依赖。之后当依赖项的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染。</p>
+<p>参考一篇言简意赅的关于响应式的文章<br><a href="https://www.cnblogs.com/zhenfei-jiang/p/7542900.html">https://www.cnblogs.com/zhenfei-jiang/p/7542900.html</a></p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<li>对于对象<blockquote>
+<p>Vue 无法检测 property 的添加或移除。Vue 会在初始化实例时对 property 执行 getter/setter 转化，所以 property 必须在 data 对象上存在才能让 Vue 将它转换为响应式的。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span>a:</span><span class="template-variable">&#123;&#123;<span class="name">msg.a</span>&#125;&#125;</span><span class="xml"> <span class="tag">&lt;<span class="name">br</span> /&gt;</span>b: </span><span class="template-variable">&#123;&#123;<span class="name">msg.b</span>&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml">new Vue(&#123;</span></span><br><span class="line"><span class="xml">  el: &#x27;#app&#x27;</span></span><br><span class="line"><span class="xml">  data: &#123;</span></span><br><span class="line"><span class="xml">    msg:&#123;</span></span><br><span class="line"><span class="xml">      a:1</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!--</span></span></span><br><span class="line"><span class="xml">浏览器控制台输入以下代码可以获取vue</span></span><br><span class="line"><span class="xml">let vue = document.getElementById(&#x27;app&#x27;)._vue_</span></span><br><span class="line"><span class="xml">获取msg</span></span><br><span class="line"><span class="xml">let msg = vue._data</span></span><br><span class="line"><span class="xml"> --&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此时输入 msg.a = 2 可以看到视图实时更新了。<br>输入 msg.b = 1，发现视图不渲染，但是打印 msg 可以看到数据是更新了的。</p>
+<p>对于此种现象，可以使使用 Vue.set()或 vm.$set(),实现响应式。vm.$set(msg,’b’,1)，实现了响应式<br>还可以使用 Object.assign({},msg,{b:1}),同样可以实现响应式</p>
+<ul>
+<li>对于数组</li>
+</ul>
+<p>Vue 不能检测以下数组的变动：</p>
+<blockquote>
+<p>当你利用索引直接设置一个数组项时，例如：vm.items[indexOfItem] = newValue<br>当你修改数组的长度时，例如：vm.items.length = newLength</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">var</span> vm = new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    items: <span class="selector-attr">[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vm<span class="selector-class">.items</span><span class="selector-attr">[1]</span> = <span class="string">&#x27;x&#x27;</span> <span class="comment">// 不是响应性的</span></span><br><span class="line">vm<span class="selector-class">.items</span><span class="selector-class">.length</span> = <span class="number">2</span> <span class="comment">// 不是响应性的</span></span><br></pre></td></tr></table></figure>
+
+<p>同理可以这么做<br>Vue.set(vm.items, indexOfItem, newValue)<br>vm.items.splice(newLength)</p>
+<h3 id="声明响应式"><a href="#声明响应式" class="headerlink" title="声明响应式"></a>声明响应式</h3><p>由于 Vue 不允许动态添加根级响应式 property，所以你必须在初始化实例前声明所有根级响应式 property，哪怕只是一个空值：</p>
+<figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line"><span class="built_in">var</span> vm = <span class="literal">new</span> Vue(&#123;</span><br><span class="line">  <span class="built_in">data</span>: &#123;</span><br><span class="line">    <span class="comment">// 声明 message 为一个空值字符串</span></span><br><span class="line">    message: <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  template: <span class="string">&#x27;&lt;div&gt;&#123;&#123; message &#125;&#125;&lt;/div&gt;&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 之后设置 `message`</span></span><br><span class="line">vm.message = <span class="string">&#x27;Hello!&#x27;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>props</title>
+    <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/props/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="props-基本使用"><a href="#props-基本使用" class="headerlink" title="props 基本使用"></a>props 基本使用</h3><ul>
+<li>Prop 的大小写<br>HTML 中的 attribute 名是大小写不敏感的，所以浏览器会把所有大写字符解释为小写字符。camelCase (驼峰命名法) 的 prop 名需要使用其等价的 kebab-case (短横线分隔命名) 命名</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">&lt;<span class="selector-tag">div</span> id=<span class="string">&#x27;app&#x27;</span>&gt;</span><br><span class="line">  &lt;child pass-msg=<span class="string">&#x27;hello&#x27;</span>&gt;&lt;/child&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">  data:&#123;</span><br><span class="line">    variable: <span class="string">&#x27;abc&#x27;</span>,</span><br><span class="line">    arr: <span class="selector-attr">[1,2,3]</span>,</span><br><span class="line">    obj: &#123;</span><br><span class="line">      <span class="selector-tag">a</span>:<span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//子组件中,</span></span><br><span class="line">props:<span class="selector-attr">[<span class="string">&#x27;passMsg&#x27;</span>]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="传递静态或动态-Prop"><a href="#传递静态或动态-Prop" class="headerlink" title="传递静态或动态 Prop"></a>传递静态或动态 Prop</h4><ul>
+<li>prop 传入一个静态的值</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">child</span> <span class="attr">pass-msg</span>=<span class="string">&#x27;hello&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>动态赋值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//传入变量</span></span><br><span class="line">&lt;child :pass-msg=<span class="string">&#x27;variable&#x27;</span>&gt;&lt;/child&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//传入Number</span></span><br><span class="line">&lt;child :pass-msg=<span class="string">&#x27;1&#x27;</span>&gt;&lt;/child&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//传入Boolean</span></span><br><span class="line">&lt;child :pass-msg=<span class="string">&#x27;true&#x27;</span>&gt;&lt;/child&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//传入Array</span></span><br><span class="line">&lt;child :pass-msg=<span class="string">&#x27;arr&#x27;</span>&gt;&lt;/child&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//传入Object</span></span><br><span class="line">&lt;child :pass-msg=<span class="string">&#x27;obj&#x27;</span>&gt;&lt;/child&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="单向数据流"><a href="#单向数据流" class="headerlink" title="单向数据流"></a>单向数据流</h4><p>遵守父级 prop 的更新会向下流动到子组件中，但是反过来则不行。</p>
+<p>如需变更子组件应该将数据初始化为自己的数据后再进行操作</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//子组件中</span></span><br><span class="line">props: [<span class="string">&#x27;passMsg&#x27;</span>],</span><br><span class="line"><span class="keyword">data</span>: function () &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    passMsg: <span class="keyword">this</span>.passMsg</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>需要注意的是引用数据类型，在子组件中改变变更这个对象或数组本身将会影响到父组件的状态。比如对象或数组，在子组件中改变了，也是会使得父组件的数据改变，它们本质上都是引用栈中的地址，若本身想改变又不影响父组件，应该克隆一份</strong></p>
+<h4 id="Prop-验证"><a href="#Prop-验证" class="headerlink" title="Prop 验证"></a>Prop 验证</h4><figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span>子组件中</span><br><span class="line">props： &#123;</span><br><span class="line">  //msg1接受<span class="built_in">Number</span>类型</span><br><span class="line">  msg1: <span class="built_in">Number</span>, <span class="regexp">//</span><span class="string">&#x27;string&#x27;</span>,</span><br><span class="line"></span><br><span class="line">  //msg2接受<span class="built_in">Number</span>或<span class="built_in">String</span>类型</span><br><span class="line">  msg2: [<span class="built_in">Number</span>,<span class="built_in">String</span>],</span><br><span class="line"></span><br><span class="line">  //msg3接受<span class="built_in">Boolean</span>类型，默认值为<span class="literal">true</span></span><br><span class="line">  msg3: &#123;</span><br><span class="line">    type: <span class="built_in">Boolean</span>,</span><br><span class="line">    default: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  //msg4接受<span class="built_in">Array</span>类型，必须传入</span><br><span class="line">  msg4: &#123;</span><br><span class="line">    type:<span class="built_in">Array</span>,</span><br><span class="line">    require:<span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="regexp">//</span>当数组默认值为空对象时,必须<span class="keyword">return</span>一个空数组，对象也一样</span><br><span class="line">  msg5: &#123;</span><br><span class="line">    type: <span class="built_in">Array</span>,</span><br><span class="line">    default: <span class="function"><span class="params">()</span>=&gt;</span> []</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当 prop 验证失败的时候，(开发环境构建版本的) Vue 将会产生一个控制台的警告。</p>
+<h5 id="类型检查"><a href="#类型检查" class="headerlink" title="类型检查"></a>类型检查</h5><ul>
+<li>String</li>
+<li>Number</li>
+<li>Boolean</li>
+<li>Array</li>
+<li>Object</li>
+<li>Date</li>
+<li>Function</li>
+<li>Symbol</li>
+</ul>
+<h3 id="inheritAttrs-与-attrs"><a href="#inheritAttrs-与-attrs" class="headerlink" title="inheritAttrs 与 $attrs"></a>inheritAttrs 与 $attrs</h3><h4 id="inheritAttrs"><a href="#inheritAttrs" class="headerlink" title="inheritAttrs"></a>inheritAttrs</h4><p>inheritAttrs 默认为 true，允许继承的意思</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">//父组件</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;app&#x27;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">child</span> <span class="attr">class</span>=<span class="string">&#x27;mychild&#x27;</span> <span class="attr">type</span>=<span class="string">&#x27;mychild&#x27;</span> <span class="attr">msg</span>=<span class="string">&#x27;hello&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//子组件模板</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&#x27;label&#x27;</span> <span class="attr">type</span>=<span class="string">&#x27;label&#x27;</span>&gt;</span> //label是子组件的根元素</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//子组件没有接受msg</span><br><span class="line">props:[]</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 那么在html会渲染msg为在子组件的根元素上,并且已有的属性会被覆盖掉,但是对于class和style会智能一些，合并起来</span></span><br><span class="line"><span class="comment">&lt;label class=&#x27;label mychild&#x27; type=&#x27;mychild&#x27; msg=&#x27;hello&#x27;&gt;...&lt;/label&gt; --&gt;</span></span><br><span class="line"></span><br><span class="line">若不想把这些非法的属性渲染到根元素，只需要设置inheritAttrs: false</span><br></pre></td></tr></table></figure>
+
+<h4 id="attrs"><a href="#attrs" class="headerlink" title="$attrs"></a>$attrs</h4><figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="xml">//父组件</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;app&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">son</span> <span class="attr">a</span>=<span class="string">&#x27;1&#x27;</span> <span class="attr">b</span>=<span class="string">&#x27;2&#x27;</span> <span class="attr">c</span>=<span class="string">&#x27;3&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">son</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml">//子组件</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    //此时$attrs为一个对象，&#123;b:&#x27;2&#x27;,c=&#x27;3&#x27;&#125;，除class、style、props接受了的属性</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">grandson</span> <span class="attr">v-bind</span>=<span class="string">&#x27;$attrs&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">grandson</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml">//子组件接受了父组件传来的a</span></span><br><span class="line"><span class="xml">props:[a],</span></span><br><span class="line"><span class="xml">inheritAttrs: false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="xml">//孙组件,可以实现跨组件传值，避免每跨一层，每层都需要写props</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">  </span><span class="template-variable">&#123;&#123;<span class="name">b</span>&#125;&#125;</span></span><br><span class="line"><span class="xml">  </span><span class="template-variable">&#123;&#123;<span class="name">c</span>&#125;&#125;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue数组更新的检测</title>
+    <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/vue%E6%95%B0%E7%BB%84%E6%9B%B4%E6%96%B0%E7%9A%84%E6%A3%80%E6%B5%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><blockquote>
+<p>可以触发数组视图更新</p>
+<ul>
+<li>变更原数组<ul>
+<li>push()</li>
+<li>pop()</li>
+<li>shift()</li>
+<li>unshift()</li>
+<li>splice()</li>
+<li>sort()</li>
+<li>reverse()</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>返回新数组<ul>
+<li>filter()</li>
+<li>concat()</li>
+<li>slice()</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>不能触发视图更新–通过索引变更<br>arr.[0] = newVal</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue自定义事件</title>
+    <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/vue%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p><strong>不同于组件和 prop，事件名不存在任何自动化的大小写转换。而是触发的事件名需要完全匹配监听这个事件所用的名称。</strong></p>
+<p>官方推荐始终使用 kebab-case 命名</p>
+<h3 id="sync"><a href="#sync" class="headerlink" title=".sync"></a>.sync</h3><p>vue 中我们经常会给子组件添加自定义事件，监听子组件某个状态的改变</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span>父组件给子组件传入一个函数</span><br><span class="line"> &lt;child :age=<span class="string">&quot;age&quot;</span> @setAge=<span class="string">&quot;(res)=&gt; age = res&quot;</span>&gt;</span><br><span class="line"> &lt;/child&gt;</span><br><span class="line"> <span class="regexp">//</span>子组件通过调用这个函数来实现修改父组件的状态。</span><br><span class="line"> mounted () &#123;</span><br><span class="line">      console.log(this.<span class="variable">$emit</span>(<span class="string">&#x27;setAge&#x27;</span>,<span class="number">1234567</span>));</span><br><span class="line"> &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这种情况比较常见切写法比较复杂。使用.sync 可以达到简化</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span>父组件将age传给子组件并使用.sync修饰符。</span><br><span class="line">&lt;child :age.sync=<span class="string">&quot;age&quot;</span>&gt;</span><br><span class="line">&lt;/child&gt;</span><br><span class="line"><span class="regexp">//</span>子组件触发事件</span><br><span class="line"> mounted () &#123;</span><br><span class="line">    console.log(this.<span class="variable">$emit</span>(<span class="string">&#x27;update:age&#x27;</span>,<span class="number">1234567</span>));</span><br><span class="line"> &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>值得注意的是事件名称被修改成了 update:age</strong></p>
+<ul>
+<li>updata：是 vue 为我们约定好的名称部分</li>
+<li>age: 是我们要修改的状态</li>
+</ul>
+<p>参考官方文档 <a href="https://cn.vuejs.org/v2/guide/components-custom-events.html">https://cn.vuejs.org/v2/guide/components-custom-events.html</a><br>参考一篇写的非常不错的，短小精悍的文章 <a href="https://blog.csdn.net/liushijun_/article/details/92426854">https://blog.csdn.net/liushijun_/article/details/92426854</a></p>
+<h3 id="listeners"><a href="#listeners" class="headerlink" title="$listeners"></a>$listeners</h3><p>包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器。它可以通过 v-on=”$listeners” 传入内部组件——在创建更高层次的组件时非常有用。<br>简单点讲它是一个对象，里面包含了作用在这个组件上所有的监听器（监听事件），可以通过 v-on=”$listeners” 将事件监听指向这个组件内的子元素（包括内部的子组件）。</p>
+<figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      &lt;child1</span></span><br><span class="line"><span class="xml">        v-on:test1=&quot;onTest1&quot;</span></span><br><span class="line"><span class="xml">        v-on:test2=&quot;onTest2&quot;&gt;</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">child1</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml">  Vue.component(&quot;Child1&quot;, </span><span class="xquery">&#123;</span></span><br><span class="line"><span class="xquery">    inheritAttrs:<span class="built_in"> true</span>,</span></span><br><span class="line"><span class="xquery">    template: `</span></span><br><span class="line"><span class="xquery">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;child-1&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="xquery">      <span class="xml"><span class="tag">&lt;<span class="name">child2</span> <span class="attr">v-bind</span>=<span class="string">&quot;$attrs&quot;</span> <span class="attr">v-on</span>=<span class="string">&quot;$listeners&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">child2</span>&gt;</span></span></span></span><br><span class="line"><span class="xquery">    &lt;/div&gt;`,</span></span><br><span class="line"><span class="xquery">    mounted: <span class="keyword">function</span>() &#123;</span></span><br><span class="line"><span class="xquery">      this.<span class="variable">$emit</span>(<span class="string">&quot;test1&quot;</span>);</span></span><br><span class="line"><span class="xquery">    &#125;</span></span><br><span class="line"><span class="xml">  &#125;);</span></span><br><span class="line"><span class="xml">  Vue.component(&quot;Child2&quot;, </span><span class="xquery">&#123;</span></span><br><span class="line"><span class="xquery">    template: `</span></span><br><span class="line"><span class="xquery">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;child-2&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="xquery">      <span class="xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;$emit(&#x27;test2&#x27;,&#x27;按钮点击&#x27;)&quot;</span>&gt;</span>触发事件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span></span><br><span class="line"><span class="xquery">    &lt;/div&gt;`,</span></span><br><span class="line"><span class="xquery">    mounted: <span class="keyword">function</span>() &#123;</span></span><br><span class="line"><span class="xquery">      this.<span class="variable">$emit</span>(<span class="string">&quot;test2&quot;</span>);</span></span><br><span class="line"><span class="xquery">    &#125;</span></span><br><span class="line"><span class="xml">  &#125;);</span></span><br><span class="line"><span class="xml">  const app = new Vue(</span><span class="xquery">&#123;</span></span><br><span class="line"><span class="xquery">    el: <span class="string">&quot;#app&quot;</span>,</span></span><br><span class="line"><span class="xquery">    methods: &#123;</span></span><br><span class="line"><span class="xquery">      onTest1() &#123;</span></span><br><span class="line"><span class="xquery">        console.log(<span class="string">&quot;test1 running...&quot;</span>);</span></span><br><span class="line"><span class="xquery">      &#125;</span><span class="xml">,</span></span><br><span class="line"><span class="xml">      onTest2(value) </span><span class="xquery">&#123;</span></span><br><span class="line"><span class="xquery">        console.log(<span class="string">&quot;test2 running...&quot;</span> + <span class="keyword">value</span>);</span></span><br><span class="line"><span class="xquery">      &#125;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml">  &#125;);</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修饰符</title>
+    <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/%E4%BF%AE%E9%A5%B0%E7%AC%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h4 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a>事件修饰符</h4><ul>
+<li>.stop 阻止冒泡（通俗讲就是阻止事件向上级 DOM 元素传递）</li>
+<li>.prevent 阻止默认事件的发生</li>
+<li>.capture 捕获冒泡，即有冒泡发生时，有该修饰符的 dom 元素会先执行，如果有多个，从外到内依次执行，然后再按自然顺序执行触发的事件。</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//html</span></span><br><span class="line">&lt;div <span class="meta">@click</span>.capture=<span class="string">&quot;outClick&quot;</span>&gt;</span><br><span class="line">  &lt;div <span class="meta">@click</span>=<span class="string">&quot;innerClick&quot;</span>&gt;</span><br><span class="line">    &lt;div <span class="meta">@click</span>=<span class="string">&quot;mostInnerClick&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//js</span></span><br><span class="line">methods:&#123;</span><br><span class="line">  <span class="function"><span class="title">outClick</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;outClick&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">innerClick</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;innerClick&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">mostInnerClick</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;mostInnerClick&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!--</span><br><span class="line">点击最内层的div</span><br><span class="line">打印顺序：outClick =&gt; <span class="function"><span class="params">mostInnerClick</span> =&gt;</span> innerClick</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>.self 将事件绑定到自身，只有自身才能触发，通常用于避免冒泡事件的影响</li>
+<li>.once 设置事件只能触发一次，比如按钮的点击等。</li>
+<li>.passive 该修饰符大概意思用于对 DOM 的默认事件进行性能优化，根据官网的例子比如超出最大范围的滚动条滚动的</li>
+</ul>
+<h4 id="按键修饰符"><a href="#按键修饰符" class="headerlink" title="按键修饰符"></a>按键修饰符</h4><p><a href="https://cn.vuejs.org/v2/guide/events.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6">https://cn.vuejs.org/v2/guide/events.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6</a></p>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
       </tags>
   </entry>
 </search>
