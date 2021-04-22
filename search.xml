@@ -546,6 +546,71 @@
       </tags>
   </entry>
   <entry>
+    <title>vue数组更新的检测</title>
+    <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/vue%E6%95%B0%E7%BB%84%E6%9B%B4%E6%96%B0%E7%9A%84%E6%A3%80%E6%B5%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><blockquote>
+<p>可以触发数组视图更新</p>
+<ul>
+<li>变更原数组<ul>
+<li>push()</li>
+<li>pop()</li>
+<li>shift()</li>
+<li>unshift()</li>
+<li>splice()</li>
+<li>sort()</li>
+<li>reverse()</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>返回新数组<ul>
+<li>filter()</li>
+<li>concat()</li>
+<li>slice()</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>不能触发视图更新–通过索引变更<br>arr.[0] = newVal</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修饰符</title>
+    <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/%E4%BF%AE%E9%A5%B0%E7%AC%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h4 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a>事件修饰符</h4><ul>
+<li>.stop 阻止冒泡（通俗讲就是阻止事件向上级 DOM 元素传递）</li>
+<li>.prevent 阻止默认事件的发生</li>
+<li>.capture 捕获冒泡，即有冒泡发生时，有该修饰符的 dom 元素会先执行，如果有多个，从外到内依次执行，然后再按自然顺序执行触发的事件。</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//html</span></span><br><span class="line">&lt;div <span class="meta">@click</span>.capture=<span class="string">&quot;outClick&quot;</span>&gt;</span><br><span class="line">  &lt;div <span class="meta">@click</span>=<span class="string">&quot;innerClick&quot;</span>&gt;</span><br><span class="line">    &lt;div <span class="meta">@click</span>=<span class="string">&quot;mostInnerClick&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//js</span></span><br><span class="line">methods:&#123;</span><br><span class="line">  <span class="function"><span class="title">outClick</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;outClick&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">innerClick</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;innerClick&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">mostInnerClick</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;mostInnerClick&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!--</span><br><span class="line">点击最内层的div</span><br><span class="line">打印顺序：outClick =&gt; <span class="function"><span class="params">mostInnerClick</span> =&gt;</span> innerClick</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>.self 将事件绑定到自身，只有自身才能触发，通常用于避免冒泡事件的影响</li>
+<li>.once 设置事件只能触发一次，比如按钮的点击等。</li>
+<li>.passive 该修饰符大概意思用于对 DOM 的默认事件进行性能优化，根据官网的例子比如超出最大范围的滚动条滚动的</li>
+</ul>
+<h4 id="按键修饰符"><a href="#按键修饰符" class="headerlink" title="按键修饰符"></a>按键修饰符</h4><p><a href="https://cn.vuejs.org/v2/guide/events.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6">https://cn.vuejs.org/v2/guide/events.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6</a></p>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>vue学习笔记</category>
+      </categories>
+      <tags>
+        <tag>vue学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>props</title>
     <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/props/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="props-基本使用"><a href="#props-基本使用" class="headerlink" title="props 基本使用"></a>props 基本使用</h3><ul>
@@ -595,46 +660,6 @@
       </tags>
   </entry>
   <entry>
-    <title>vue数组更新的检测</title>
-    <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/vue%E6%95%B0%E7%BB%84%E6%9B%B4%E6%96%B0%E7%9A%84%E6%A3%80%E6%B5%8B/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><blockquote>
-<p>可以触发数组视图更新</p>
-<ul>
-<li>变更原数组<ul>
-<li>push()</li>
-<li>pop()</li>
-<li>shift()</li>
-<li>unshift()</li>
-<li>splice()</li>
-<li>sort()</li>
-<li>reverse()</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<blockquote>
-<ul>
-<li>返回新数组<ul>
-<li>filter()</li>
-<li>concat()</li>
-<li>slice()</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<blockquote>
-<p>不能触发视图更新–通过索引变更<br>arr.[0] = newVal</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>vue</category>
-        <category>vue学习笔记</category>
-      </categories>
-      <tags>
-        <tag>vue学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue自定义事件</title>
     <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/vue%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p><strong>不同于组件和 prop，事件名不存在任何自动化的大小写转换。而是触发的事件名需要完全匹配监听这个事件所用的名称。</strong></p>
@@ -663,28 +688,270 @@
       </tags>
   </entry>
   <entry>
-    <title>修饰符</title>
-    <url>/2021/04/21/vue%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/%E4%BF%AE%E9%A5%B0%E7%AC%A6/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h4 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a>事件修饰符</h4><ul>
-<li>.stop 阻止冒泡（通俗讲就是阻止事件向上级 DOM 元素传递）</li>
-<li>.prevent 阻止默认事件的发生</li>
-<li>.capture 捕获冒泡，即有冒泡发生时，有该修饰符的 dom 元素会先执行，如果有多个，从外到内依次执行，然后再按自然顺序执行触发的事件。</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//html</span></span><br><span class="line">&lt;div <span class="meta">@click</span>.capture=<span class="string">&quot;outClick&quot;</span>&gt;</span><br><span class="line">  &lt;div <span class="meta">@click</span>=<span class="string">&quot;innerClick&quot;</span>&gt;</span><br><span class="line">    &lt;div <span class="meta">@click</span>=<span class="string">&quot;mostInnerClick&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//js</span></span><br><span class="line">methods:&#123;</span><br><span class="line">  <span class="function"><span class="title">outClick</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;outClick&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">innerClick</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;innerClick&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">mostInnerClick</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;mostInnerClick&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!--</span><br><span class="line">点击最内层的div</span><br><span class="line">打印顺序：outClick =&gt; <span class="function"><span class="params">mostInnerClick</span> =&gt;</span> innerClick</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+    <title>解构赋值</title>
+    <url>/2021/04/21/ES6/%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="基本数据类型的结构赋值"><a href="#基本数据类型的结构赋值" class="headerlink" title="基本数据类型的结构赋值"></a>基本数据类型的结构赋值</h3><h4 id="字符串结构赋值"><a href="#字符串结构赋值" class="headerlink" title="字符串结构赋值"></a>字符串结构赋值</h4><p>转换成类型数组的结构</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> [a, b, c, d, e] = <span class="string">&#x27;hello&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>.self 将事件绑定到自身，只有自身才能触发，通常用于避免冒泡事件的影响</li>
-<li>.once 设置事件只能触发一次，比如按钮的点击等。</li>
-<li>.passive 该修饰符大概意思用于对 DOM 的默认事件进行性能优化，根据官网的例子比如超出最大范围的滚动条滚动的</li>
+<h4 id="数值和布尔值的解构赋值"><a href="#数值和布尔值的解构赋值" class="headerlink" title="数值和布尔值的解构赋值"></a>数值和布尔值的解构赋值</h4><p>解构赋值时，如果等号右边是数值和布尔值，则会先转为对象。</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;<span class="built_in">toString</span>: s&#125; = <span class="number">123</span>;</span><br><span class="line"><span class="attr">s</span> === Number.prototype.<span class="built_in">toString</span> // <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> &#123;<span class="built_in">toString</span>: s&#125; = <span class="literal">true</span>;</span><br><span class="line"><span class="attr">s</span> === Boolean.prototype.<span class="built_in">toString</span> // <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="引用数据类型的结构赋值"><a href="#引用数据类型的结构赋值" class="headerlink" title="引用数据类型的结构赋值"></a>引用数据类型的结构赋值</h3><h4 id="数组的结构赋值"><a href="#数组的结构赋值" class="headerlink" title="数组的结构赋值"></a>数组的结构赋值</h4><p>数组的元素是按次序排列的，所以结构赋值的变量需要对应</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">let [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">console.log(a,b,c) <span class="regexp">//</span><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span></span><br><span class="line"></span><br><span class="line">let [ , , third] = [<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>, <span class="string">&quot;baz&quot;</span>];</span><br><span class="line">third <span class="regexp">//</span> <span class="string">&quot;baz&quot;</span></span><br><span class="line"></span><br><span class="line">如果结构不成功为 undefined</span><br><span class="line">let [foo] = [];</span><br><span class="line">let [bar, foo] = [<span class="number">1</span>];</span><br><span class="line"><span class="regexp">//</span>foo 的值都为 undefined</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>不完全解构</span><br><span class="line">let [x, y] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">x <span class="regexp">//</span> <span class="number">1</span></span><br><span class="line">y <span class="regexp">//</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line">let [a, [b], d] = [<span class="number">1</span>, [<span class="number">2</span>, <span class="number">3</span>], <span class="number">4</span>];</span><br><span class="line">a <span class="regexp">//</span> <span class="number">1</span></span><br><span class="line">b <span class="regexp">//</span> <span class="number">2</span></span><br><span class="line">d <span class="regexp">//</span> <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>指定默认值</span><br><span class="line">let [foo = true] = [];</span><br><span class="line">foo <span class="regexp">//</span> true</span><br><span class="line"></span><br><span class="line">let [x, y] = [<span class="number">1</span>]</span><br><span class="line">console.log(x, y) <span class="regexp">//</span><span class="number">1</span>，undefined</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="对象的结构赋值"><a href="#对象的结构赋值" class="headerlink" title="对象的结构赋值"></a>对象的结构赋值</h4><ul>
+<li>对象的属性没有次序，变量必须与属性同名，才能取到正确的值</li>
+<li>对象的解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量。真正被赋值的是后者，而不是前者。</li>
 </ul>
-<h4 id="按键修饰符"><a href="#按键修饰符" class="headerlink" title="按键修饰符"></a>按键修饰符</h4><p><a href="https://cn.vuejs.org/v2/guide/events.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6">https://cn.vuejs.org/v2/guide/events.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6</a></p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">let &#123; foo, bar &#125; = &#123; foo: <span class="string">&#x27;aaa&#x27;</span>, bar: <span class="string">&#x27;bbb&#x27;</span> &#125;;</span><br><span class="line">foo <span class="regexp">//</span> <span class="string">&quot;aaa&quot;</span></span><br><span class="line">bar <span class="regexp">//</span> <span class="string">&quot;bbb&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>对象的解构赋值，可以很方便地将现有对象的方法，赋值到某个变量。</span><br><span class="line">const &#123; log &#125; = console;</span><br><span class="line">log(<span class="string">&#x27;hello&#x27;</span>) <span class="regexp">//</span> hello</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>如果解构失败，变量的值等于 undefined。</span><br><span class="line">let &#123; baz &#125; = &#123; foo: <span class="string">&#x27;aaa&#x27;</span>, bar: <span class="string">&#x27;bbb&#x27;</span> &#125;;</span><br><span class="line">baz <span class="regexp">//</span> undefined</span><br><span class="line"></span><br><span class="line">&lt;!-- 变量名与属性名不一致，必须写成下面这样</span><br><span class="line">foo是匹配的模式，baz才是变量。真正被赋值的是变量baz，而不是模式foo。 --&gt;</span><br><span class="line"></span><br><span class="line">let &#123; foo: baz &#125; = &#123; foo: <span class="string">&#x27;aaa&#x27;</span>, bar: <span class="string">&#x27;bbb&#x27;</span> &#125;;</span><br><span class="line">baz <span class="regexp">//</span> <span class="string">&quot;aaa&quot;</span></span><br><span class="line"></span><br><span class="line">&lt;!-- 等价于 baz=&#123;foo: <span class="string">&#x27;aaa&#x27;</span>, bar: <span class="string">&#x27;bbb&#x27;</span>&#125;.foo --&gt;</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>嵌套赋值</span><br><span class="line">let obj = &#123;&#125;;</span><br><span class="line">let arr = [];</span><br><span class="line">(&#123; foo: obj.prop, bar: arr[<span class="number">0</span>] &#125; = &#123; foo: <span class="number">123</span>, bar: true &#125;);</span><br><span class="line">obj <span class="regexp">//</span> &#123;prop:<span class="number">123</span>&#125;</span><br><span class="line">arr <span class="regexp">//</span> [true]</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>如果解构模式是嵌套的对象，而且子对象所在的父属性不存在，那么将会报错。</span><br><span class="line">let &#123;foo: &#123;bar&#125;&#125; = &#123;baz: <span class="string">&#x27;baz&#x27;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>对象的解构赋值可以取到继承的属性。</span><br><span class="line">const obj1 = &#123;&#125;;</span><br><span class="line">const obj2 = &#123; foo: <span class="string">&#x27;bar&#x27;</span> &#125;;</span><br><span class="line">Object.setPrototypeOf(obj1, obj2); <span class="regexp">//</span>将 obj2 设置为 obj1 的原型对象</span><br><span class="line">const &#123; foo &#125; = obj1;</span><br><span class="line">foo <span class="regexp">//</span> <span class="string">&quot;bar&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>可以设置默认值</span><br><span class="line">var &#123;x = <span class="number">3</span>&#125; = &#123;&#125;; <span class="regexp">//</span>空对象，找不到可以赋值的属性，x 任取默认值</span><br><span class="line">x <span class="regexp">//</span> <span class="number">3</span></span><br><span class="line"></span><br><span class="line">var &#123;x, y = <span class="number">5</span>&#125; = &#123;x: <span class="number">1</span>&#125;;</span><br><span class="line">x <span class="regexp">//</span> <span class="number">1</span></span><br><span class="line">y <span class="regexp">//</span> <span class="number">5</span></span><br><span class="line"></span><br><span class="line">var &#123;x: y = <span class="number">3</span>&#125; = &#123;x: <span class="number">5</span>&#125;; <span class="regexp">//</span>对象内有 x，将 x 赋给 y，覆盖掉 y 的默认值 x=<span class="number">3</span>,y=<span class="number">5</span>,y=x</span><br><span class="line">y <span class="regexp">//</span> <span class="number">5</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="函数参数的结构赋值"><a href="#函数参数的结构赋值" class="headerlink" title="函数参数的结构赋值"></a>函数参数的结构赋值</h4><figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="function">function <span class="title">add</span><span class="params">([x, y])</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">add</span>([<span class="number">1</span>, <span class="number">2</span>]); <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]].<span class="built_in">map</span>(([a, b]) =&gt; a + b);</span><br><span class="line"><span class="comment">// [ 3, 7 ]</span></span><br><span class="line"></span><br><span class="line">&lt;!-- 函数参数的解构也可以使用默认值。</span><br><span class="line">函数move的参数是一个对象，通过对这个对象进行解构，得到变量x和y的值。如果解构失败，x和y等于默认值。 --&gt;</span><br><span class="line"><span class="function">function <span class="title">move</span><span class="params">(&#123;x = <span class="number">0</span>, y = <span class="number">0</span>&#125; = &#123;&#125;)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [x, y];</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">move</span>(&#123;x: <span class="number">3</span>, y: <span class="number">8</span>&#125;); <span class="comment">// [3, 8]</span></span><br><span class="line"><span class="built_in">move</span>(&#123;x: <span class="number">3</span>&#125;); <span class="comment">// [3, 0]</span></span><br><span class="line"><span class="built_in">move</span>(&#123;&#125;); <span class="comment">// [0, 0]</span></span><br><span class="line"><span class="built_in">move</span>(); <span class="comment">// [0, 0]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这里是为函数move的参数指定默认值，而不是为变量x和y指定默认值</span></span><br><span class="line"><span class="function">function <span class="title">move</span><span class="params">(&#123;x, y&#125; = &#123; x: <span class="number">0</span>, y: <span class="number">0</span> &#125;)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [x, y];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">move</span>(&#123;x: <span class="number">3</span>, y: <span class="number">8</span>&#125;); <span class="comment">// [3, 8]</span></span><br><span class="line"><span class="built_in">move</span>(&#123;x: <span class="number">3</span>&#125;); <span class="comment">// [3, undefined]</span></span><br><span class="line"><span class="built_in">move</span>(&#123;&#125;); <span class="comment">// [undefined, undefined]</span></span><br><span class="line"><span class="built_in">move</span>(); <span class="comment">// [0, 0]</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>vue</category>
-        <category>vue学习笔记</category>
+        <category>js</category>
+        <category>es6</category>
       </categories>
       <tags>
-        <tag>vue学习笔记</tag>
+        <tag>js</tag>
+        <tag>es6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串新增方法</title>
+    <url>/2021/04/21/ES6/%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%B0%E5%A2%9E%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h4 id="String-fromCodePoint"><a href="#String-fromCodePoint" class="headerlink" title="String.fromCodePoint()"></a>String.fromCodePoint()</h4><p>ES5 有 String.fromCharCode()方法，用于从 Unicode 码点返回对应字符，但是这个方法不能识别码点大于 0xFFFF 的字符。而 String.fromCodePoint()可以弥补它的不足</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="built_in">string</span> = <span class="module-access"><span class="module"><span class="identifier">String</span>.</span></span>from<span class="constructor">CharCode(0x00061)</span> <span class="comment">//a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果有多个参数则它们被合并成一个字符串返回</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">String</span>.</span></span>from<span class="constructor">CodePoint(0x78, 0x1f680, 0x79)</span><span class="operator"> === </span>&#x27;x\uD83D\uDE80y&#x27;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h4><blockquote>
+<p><strong>codePointAt()</strong></p>
+</blockquote>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">var s = <span class="string">&quot;𠮷&quot;</span>;</span><br><span class="line">s.length <span class="comment">// 2</span></span><br><span class="line">s.<span class="built_in">char</span><span class="constructor">At(0)</span> <span class="comment">// &#x27;&#x27;</span></span><br><span class="line">s.<span class="built_in">char</span><span class="constructor">At(1)</span> <span class="comment">// &#x27;&#x27;</span></span><br><span class="line">s.<span class="built_in">char</span><span class="constructor">CodeAt(0)</span> <span class="comment">// 55362</span></span><br><span class="line">s.<span class="built_in">char</span><span class="constructor">CodeAt(1)</span> <span class="comment">// 57271</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>汉字“𠮷”（注意，这个字不是“吉祥”的“吉”）的码点是 0x20BB7，UTF-16 编码为 0xD842 0xDFB7（十进制为 55362 57271），需要 4 个字节储存。对于这种 4 个字节的字符，JavaScript 不能正确处理，字符串长度会误判为 2，而且 charAt()方法无法读取整个字符，charCodeAt()方法只能分别返回前两个字节和后两个字节的值。</p>
+<blockquote>
+<p><strong>includes(str,start)</strong></p>
+</blockquote>
+<ul>
+<li>str 查找的字符串</li>
+<li>start 查找的起始位置</li>
+</ul>
+<p>JavaScript 只有 indexOf 方法，可以用来确定一个字符串是否包含在另一个字符串中,es6 提供三种新方法，其中之一为 includes()</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">let s = <span class="string">&#x27;Hello world!&#x27;</span>;</span><br><span class="line">s.includes(<span class="string">&#x27;o&#x27;</span>) <span class="regexp">//</span> true</span><br><span class="line">s.includes(<span class="string">&#x27;Hello&#x27;</span>, <span class="number">6</span>) <span class="regexp">//</span> false</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>startsWith(str,start)</strong> 返回布尔值，表示参数字符串是否在原字符串的头部。</p>
+</blockquote>
+<ul>
+<li>str 查找的字符串</li>
+<li>start 查找的起始位置</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">let s = <span class="string">&#x27;Hello world!&#x27;</span>;</span><br><span class="line">s.startsWith(<span class="string">&#x27;Hello&#x27;</span>) <span class="regexp">//</span> true</span><br><span class="line">s.startsWith(<span class="string">&#x27;world&#x27;</span>, <span class="number">6</span>) <span class="regexp">//</span> true</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>endsWith(str,inStart)</strong> 返回布尔值，表示参数字符串是否在原字符串的尾部。</p>
+</blockquote>
+<ul>
+<li>str 查找的字符串</li>
+<li>inStart 在 inStart 位置内查找</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">let s = <span class="string">&#x27;Hello world!&#x27;</span>;</span><br><span class="line">s.endsWith(<span class="string">&#x27;!&#x27;</span>) <span class="regexp">//</span> true</span><br><span class="line">s.endsWith(<span class="string">&#x27;Hello&#x27;</span>, <span class="number">5</span>) <span class="regexp">//</span> true      表示在前<span class="number">5</span>个字符内查找<span class="string">&#x27;Hello&#x27;</span>是不是最后位置</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>repeat(n)</strong> 返回一个新字符串，表示将原字符串重复 n 次。</p>
+</blockquote>
+<ul>
+<li>n 表示重复 n 次</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;x&#x27;</span>.repeat(<span class="number">3</span>) <span class="regexp">//</span> <span class="string">&quot;xxx&quot;</span></span><br><span class="line"><span class="string">&#x27;hello&#x27;</span>.repeat(<span class="number">2</span>) <span class="regexp">//</span> <span class="string">&quot;hellohello&quot;</span></span><br><span class="line"><span class="string">&#x27;na&#x27;</span>.repeat(<span class="number">0</span>) <span class="regexp">//</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="regexp">//</span>小数会被向下取整</span><br><span class="line"><span class="string">&#x27;na&#x27;</span>.repeat(<span class="number">2.9</span>) <span class="regexp">//</span> <span class="string">&quot;nana&quot;</span></span><br><span class="line"><span class="regexp">//</span>参数是大于或等于-<span class="number">1</span>或者Infinity，会报错。</span><br><span class="line"><span class="string">&#x27;na&#x27;</span>.repeat(Infinity) <span class="regexp">//</span> RangeError</span><br><span class="line"><span class="string">&#x27;na&#x27;</span>.repeat(-<span class="number">1</span>) <span class="regexp">//</span> RangeError</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>参数是 <span class="number">0</span> 到-<span class="number">1</span> 之间的小数，则等同于 <span class="number">0</span>,因为会先进行取整运算</span><br><span class="line"><span class="string">&#x27;na&#x27;</span>.repeat(-<span class="number">0.9</span>) <span class="regexp">//</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="regexp">//</span>参数NaN等同于 <span class="number">0</span>。</span><br><span class="line"><span class="string">&#x27;na&#x27;</span>.repeat(NaN) <span class="regexp">//</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="regexp">//</span>参数是字符串，则会先转换成数字。</span><br><span class="line"><span class="string">&#x27;na&#x27;</span>.repeat(<span class="string">&#x27;3&#x27;</span>) <span class="regexp">//</span> <span class="string">&quot;nanana&quot;</span></span><br><span class="line"><span class="string">&#x27;na&#x27;</span>.repeat(<span class="string">&#x27;na&#x27;</span>) <span class="regexp">//</span> <span class="string">&quot;&quot;</span>    <span class="string">&#x27;na&#x27;</span>.repeat(Number(<span class="string">&#x27;na&#x27;</span>))  Number(<span class="string">&#x27;na&#x27;</span>)=== NaN</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>实例方法：padStart()与 padEnd()</strong> ES2017 引入了字符串补全长度的功能。返回一个新字符串</p>
+</blockquote>
+<ul>
+<li><p>padStart(num,str) 头部补全</p>
+</li>
+<li><p>padEnd(num,str) 尾部补全</p>
+<ul>
+<li>num 将字符串补全为 num 位</li>
+<li>str 需要填充的字符串</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;x&#x27;</span>.padStart(<span class="number">5</span>, <span class="string">&#x27;ab&#x27;</span>) <span class="regexp">//</span> <span class="string">&#x27;ababx&#x27;</span></span><br><span class="line"><span class="string">&#x27;x&#x27;</span>.padStart(<span class="number">4</span>, <span class="string">&#x27;ab&#x27;</span>) <span class="regexp">//</span> <span class="string">&#x27;abax&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>原字符串的长度，等于或大于最大长度，则字符串补全不生效，返回原字符串</span><br><span class="line"><span class="string">&#x27;xxx&#x27;</span>.padStart(<span class="number">2</span>, <span class="string">&#x27;ab&#x27;</span>) <span class="regexp">//</span> <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line"><span class="string">&#x27;xxx&#x27;</span>.padEnd(<span class="number">2</span>, <span class="string">&#x27;ab&#x27;</span>) <span class="regexp">//</span> <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>来补全的字符串与原字符串，两者的长度之和超过了最大长度，则会截去超出位数的补全字符串。</span><br><span class="line"><span class="string">&#x27;abc&#x27;</span>.padStart(<span class="number">10</span>, <span class="string">&#x27;0123456789&#x27;</span>) <span class="regexp">//</span> <span class="string">&#x27;0123456abc&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> 省略第二个参数，默认使用空格补全长度</span><br><span class="line"><span class="string">&#x27;x&#x27;</span>.padStart(<span class="number">4</span>) <span class="regexp">//</span> <span class="string">&#x27;   x&#x27;</span></span><br><span class="line"><span class="string">&#x27;x&#x27;</span>.padEnd(<span class="number">4</span>) <span class="regexp">//</span> <span class="string">&#x27;x   &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>**实例方法：trimStart()，trimEnd() ** ES2019 对字符串实例新增了 trimStart()和 trimEnd()这两个方法,与 trim()类似,返回一个新字符串</p>
+</blockquote>
+<ul>
+<li>trimStart()</li>
+<li>trimEnd()</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">const s = <span class="string">&#x27;  abc  &#x27;</span>;</span><br><span class="line"></span><br><span class="line">s.trim() <span class="regexp">//</span> <span class="string">&quot;abc&quot;</span></span><br><span class="line">s.trimStart() <span class="regexp">//</span> <span class="string">&quot;abc  &quot;</span></span><br><span class="line">s.trimEnd() <span class="regexp">//</span> <span class="string">&quot;  abc&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>实例方法：matchAll()</strong> matchAll()方法返回一个正则表达式在当前字符串的所有匹配</p>
+</blockquote>
+<blockquote>
+<p><strong>实例方法：replaceAll()</strong> ES2021 引入了 replaceAll()方法，可以一次性替换所有匹配。返回一个新字符串</p>
+</blockquote>
+<p>弥补 replace()只能替换第一个匹配的不足</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span>replace()如果要替换所有的匹配，势必会使用正则表达式的g修饰符。</span><br><span class="line"><span class="string">&#x27;aabbcc&#x27;</span>.replace(<span class="regexp">/b/g</span>, <span class="string">&#x27;_&#x27;</span>) <span class="regexp">//</span> <span class="string">&#x27;aa_bcc&#x27;</span></span><br><span class="line"><span class="regexp">//</span>replaceAll() 会更加简洁</span><br><span class="line"><span class="string">&#x27;aabbcc&#x27;</span>.replaceAll(<span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;_&#x27;</span>) <span class="regexp">//</span> <span class="string">&#x27;aa__cc&#x27;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>js</category>
+        <category>es6</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+        <tag>es6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数值的扩展</title>
+    <url>/2021/04/21/ES6/%E6%95%B0%E5%80%BC%E7%9A%84%E6%89%A9%E5%B1%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="Number-相关"><a href="#Number-相关" class="headerlink" title="Number 相关"></a>Number 相关</h3><blockquote>
+<p>Number.isFinite(), Number.isNaN()</p>
+</blockquote>
+<p>ES6 在 Number 对象上，新提供了 Number.isFinite()和 Number.isNaN()两个方法</p>
+<ul>
+<li>Number.isFinite() 用来检查一个数值是不是 Infinity</li>
+<li>Number.isNaN() 用来检查一个值是否为 NaN。</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Finite(15)</span>; <span class="comment">// true</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Finite(0.8)</span>; <span class="comment">// true</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Finite(NaN)</span>; <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Finite(Infinity)</span>; <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Finite(-Infinity)</span>; <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Finite(&#x27;<span class="params">foo</span>&#x27;)</span>; <span class="comment">// false</span></span><br><span class="line"><span class="comment">//参数类型不是明确的数值，Number.isFinite一律返回false。</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Finite(&#x27;15&#x27;)</span>; <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Finite(<span class="params">true</span>)</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">&lt;!-- 参数类型不是NaN，<span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>isNaN一律返回<span class="literal">false</span>。 --&gt;</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">NaN(NaN)</span> <span class="comment">// true</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">NaN(15)</span> <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">NaN(&#x27;15&#x27;)</span> <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">NaN(<span class="params">true</span>)</span> <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">NaN(9<span class="operator">/</span>NaN)</span> <span class="comment">// true</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">NaN(&#x27;<span class="params">true</span>&#x27; <span class="operator">/</span> 0)</span> <span class="comment">// true</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">NaN(&#x27;<span class="params">true</span>&#x27; <span class="operator">/</span> &#x27;<span class="params">true</span>&#x27;)</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>与传统的全局方法 isFinite()和 isNaN()的区别</p>
+<figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">isFinite</span>(<span class="string">&quot;25&quot;</span>)  //<span class="literal">true</span>   传统方法<span class="built_in">isFinite</span>(<span class="built_in">Number</span>(<span class="string">&#x27;25&#x27;</span>))</span><br><span class="line"><span class="built_in">Number</span>.<span class="built_in">isFinite</span>(<span class="string">&quot;25&quot;</span>) //<span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">isNaN</span>(<span class="literal">NaN</span>) <span class="regexp">//</span> <span class="literal">true</span></span><br><span class="line"><span class="built_in">isNaN</span>(<span class="string">&quot;NaN&quot;</span>) <span class="regexp">//</span> <span class="literal">true</span></span><br><span class="line"><span class="built_in">Number</span>.<span class="built_in">isNaN</span>(<span class="literal">NaN</span>) <span class="regexp">//</span> <span class="literal">true</span></span><br><span class="line"><span class="built_in">Number</span>.<span class="built_in">isNaN</span>(<span class="string">&quot;NaN&quot;</span>) <span class="regexp">//</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Number.parseInt(), Number.parseFloat()<br>ES6 将全局方法 parseInt()和 parseFloat()，移植到 Number 对象上面，行为完全保持不变。</p>
+</blockquote>
+<figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Number</span>.<span class="built_in">parseInt</span> === <span class="built_in">parseInt</span> <span class="regexp">//</span> <span class="literal">true</span></span><br><span class="line"><span class="built_in">Number</span>.<span class="built_in">parseFloat</span> === <span class="built_in">parseFloat</span> <span class="regexp">//</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Number.isInteger()</p>
+</blockquote>
+<p>Number.isInteger()用来判断一个数值是否为整数。但是局限性比较大</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Integer(25)</span> <span class="comment">// true</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Integer(25.1)</span> <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Integer(25.0)</span> <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//参数不是数值，Number.isInteger返回false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Integer()</span> <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Integer(<span class="params">null</span>)</span> <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Integer(&#x27;15&#x27;)</span> <span class="comment">// false</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Integer(<span class="params">true</span>)</span> <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>is<span class="constructor">Integer(3.0000000000000002)</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Number.EPSILON 表示极小常量</p>
+</blockquote>
+<h3 id="Math-对象的扩展"><a href="#Math-对象的扩展" class="headerlink" title="Math 对象的扩展"></a>Math 对象的扩展</h3><p>以下方法都是静态方法，只能在 Math 对象上调用</p>
+<blockquote>
+<p>Math.trunc() 去除一个数的小数部分，返回整数部分。</p>
+</blockquote>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc(<span class="number">4.1</span>) <span class="comment">// 4</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc<span class="number">(-4.1)</span> <span class="comment">// -4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于非数值，Math.trunc内部使用Number方法将其先转为数值。</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc(&#x27;<span class="number">123.456</span>&#x27;) <span class="comment">// 123</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc(<span class="literal">true</span>) <span class="comment">//1</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc(<span class="literal">false</span>) <span class="comment">// 0</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc(null) <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于空值和无法截取整数的值，返回NaN。</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc(NaN);      <span class="comment">// NaN</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc(&#x27;foo&#x27;);    <span class="comment">// NaN</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc<span class="literal">()</span>;         <span class="comment">// NaN</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc(undefined) <span class="comment">// NaN</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于没有部署这个方法的环境，可以用下面的代码模拟。</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc = <span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>trunc<span class="operator"> || </span><span class="keyword">function</span>(x) &#123;</span><br><span class="line">  return x &lt; <span class="number">0</span> ? <span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>ceil(x) : <span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>floor(x);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Math.sign() 用来判断一个数到底是正数、负数、还是零。</p>
+</blockquote>
+<p>返回值</p>
+<ul>
+<li>参数为正数，返回+1；</li>
+<li>参数为负数，返回-1；</li>
+<li>参数为 0，返回 0；</li>
+<li>参数为-0，返回-0;</li>
+<li>其他值，返回 NaN。</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign<span class="number">(-5)</span> <span class="comment">// -1</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(<span class="number">5</span>) <span class="comment">// +1</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(<span class="number">0</span>) <span class="comment">// +0</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign<span class="number">(-0)</span> <span class="comment">// -0</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(NaN) <span class="comment">// NaN</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//参数是非数值，会自动转为数值。对于那些无法转为数值的值，会返回NaN。</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(&#x27;&#x27;)  <span class="comment">// 0</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(<span class="literal">true</span>)  <span class="comment">// +1</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(<span class="literal">false</span>)  <span class="comment">// 0</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(null)  <span class="comment">// 0</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(<span class="character">&#x27;9&#x27;</span>)  <span class="comment">// +1</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(&#x27;foo&#x27;)  <span class="comment">// NaN</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign<span class="literal">()</span>  <span class="comment">// NaN</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign(undefined)  <span class="comment">// NaN</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于没有部署这个方法的环境，可以用下面的代码模拟。</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign = <span class="module-access"><span class="module"><span class="identifier">Math</span>.</span></span>sign<span class="operator"> || </span><span class="keyword">function</span>(x) &#123;</span><br><span class="line">  x = +x; <span class="comment">// convert to a number</span></span><br><span class="line">  <span class="keyword">if</span> (x<span class="operator"> === </span><span class="number">0</span><span class="operator"> || </span>is<span class="constructor">NaN(<span class="params">x</span>)</span>) &#123;</span><br><span class="line">    return x;</span><br><span class="line">  &#125;</span><br><span class="line">  return x &gt; <span class="number">0</span> ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="BigInt-数据类型"><a href="#BigInt-数据类型" class="headerlink" title="BigInt 数据类型"></a>BigInt 数据类型</h3><p>ES2020 引入了一种新的数据类型 BigInt（大整数）<br>为了与 Number 类型区别，BigInt 类型的数据必须添加后缀 n。</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">const a</span> = 2172141653n;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>js</category>
+        <category>es6</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+        <tag>es6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>函数的扩展</title>
+    <url>/2021/04/21/ES6/%E5%87%BD%E6%95%B0%E7%9A%84%E6%89%A9%E5%B1%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h4 id="函数默认值"><a href="#函数默认值" class="headerlink" title="函数默认值"></a>函数默认值</h4><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">function foo(a=<span class="number">1</span>,b)&#123;</span><br><span class="line">  console<span class="selector-class">.log</span>(<span class="selector-tag">a</span>,b)  <span class="comment">//1,undefined</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="title">foo</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是以下两种写法</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span> 写法一</span><br><span class="line"><span class="keyword">function</span> m1(&#123;x = <span class="number">0</span>, y = <span class="number">0</span>&#125; = &#123;&#125;) &#123;</span><br><span class="line">  return [x, y];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> 写法二</span><br><span class="line"><span class="keyword">function</span> m2(&#123;x, y&#125; = &#123; x: <span class="number">0</span>, y: <span class="number">0</span> &#125;) &#123;</span><br><span class="line">  return [x, y];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> 函数没有参数的情况</span><br><span class="line">m1() <span class="regexp">//</span> [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">m2() <span class="regexp">//</span> [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> x 和 y 都有值的情况</span><br><span class="line">m1(&#123;x: <span class="number">3</span>, y: <span class="number">8</span>&#125;) <span class="regexp">//</span> [<span class="number">3</span>, <span class="number">8</span>]</span><br><span class="line">m2(&#123;x: <span class="number">3</span>, y: <span class="number">8</span>&#125;) <span class="regexp">//</span> [<span class="number">3</span>, <span class="number">8</span>]</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> x 有值，y 无值的情况</span><br><span class="line">m1(&#123;x: <span class="number">3</span>&#125;) <span class="regexp">//</span> [<span class="number">3</span>, <span class="number">0</span>]</span><br><span class="line">m2(&#123;x: <span class="number">3</span>&#125;) <span class="regexp">//</span> [<span class="number">3</span>, undefined]</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> x 和 y 都无值的情况</span><br><span class="line">m1(&#123;&#125;) <span class="regexp">//</span> [<span class="number">0</span>, <span class="number">0</span>];</span><br><span class="line">m2(&#123;&#125;) <span class="regexp">//</span> [undefined, undefined]</span><br><span class="line"></span><br><span class="line">m1(&#123;z: <span class="number">3</span>&#125;) <span class="regexp">//</span> [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">m2(&#123;z: <span class="number">3</span>&#125;) <span class="regexp">//</span> [undefined, undefined]</span><br></pre></td></tr></table></figure>
+
+<p>解析：<br>可以确定 m1，m2 的参数是一个对象。m1 相当于是声明了 x,y 的变量并初始化(let x=0,y=0)是 x,y 先有值再添加到对象上。实参传入后会覆盖掉形参的对象，原有的 x,y(传参完整的情况)，<br>当传参不全({x:1})时，y 仍然有值<br>m2 相当于是声明了 x,y 的变量,但是没有进行初始化。直接是形参对象有属性，当不传参时，形参对象解构赋值。传参不全时就会实参覆盖掉形参，这时可能就会只有 x,或 y 有值，另一个为 undefined 了。</p>
+<h4 id="函数的-length-属性"><a href="#函数的-length-属性" class="headerlink" title="函数的 length 属性"></a>函数的 length 属性</h4><p>指定了默认值以后，函数的 length 属性，将返回没有指定默认值的参数个数。也就是说，指定了默认值后，length 属性将失真。</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">(a)</span> </span>&#123;&#125;).length <span class="comment">// 1</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">(a = 5)</span> </span>&#123;&#125;).length <span class="comment">// 0</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">(a, b, c = 5)</span> </span>&#123;&#125;).length <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">//rest 参数也不会计入length属性。</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">(<span class="rest_arg">...args</span>)</span> </span>&#123;&#125;).length <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//设置了默认值的参数不是尾参数，那么length属性也不再计入后面的参数</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">(a = 0, b, c)</span> </span>&#123;&#125;).length <span class="comment">// 0</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">(a, b = 1, c)</span> </span>&#123;&#125;).length <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="作用域-重点，费了好一会才理清思路"><a href="#作用域-重点，费了好一会才理清思路" class="headerlink" title="作用域 重点，费了好一会才理清思路"></a>作用域 重点，费了好一会才理清思路</h3><p>一旦设置了参数的默认值，函数进行声明初始化时，参数会形成一个单独的作用域（context）。<br><strong>只有设置参数默认值时，才会出现</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//第一个例子</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">x, y = x</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(y);</span><br><span class="line">&#125;</span><br><span class="line">f(<span class="number">2</span>) <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第二个例子</span></span><br><span class="line">&lt;!-- 可以理解为在全局作用域与函数作用域中，存在一个偏向于函数作用域的作用域，我称呼它为函数内上层作用域（参数作用域）。<span class="keyword">let</span>是块级作用域，应该为函数的内下层作用域（函数作用域）。这两个作用域是独立的，遵循作用域链。</span><br><span class="line">参数作用域中，做的操作是给参数y赋值，y=x,但是x必须要有才能赋值，否则就会报错。x在该层作用域没有声明，只能根据作用域链只能找到全局作用域的x，所以y=<span class="number">1</span>。这是函数在初始化时就已经决定了参数的默认值。</span><br><span class="line"> --&gt;</span><br><span class="line"><span class="keyword">let</span> x = <span class="number">1</span>;  <span class="comment">//全局的x如果不存在会报错</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">y = x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">2</span>;  <span class="comment">// let x=2 || x=2 这两种写法与var x=2没有任何区别，f()打印都为1</span></span><br><span class="line">  <span class="built_in">console</span>.log(y);</span><br><span class="line">&#125;</span><br><span class="line">f() <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//第三个例子</span></span><br><span class="line">&lt;!-- 参数作用域&#123;<span class="keyword">let</span> x,<span class="keyword">let</span> y=x&#125;,函数内下层作用域<span class="built_in">console</span>.log(x),找的是本作用域的x，打印<span class="number">3</span>;<span class="built_in">console</span>.log(y),根据作用域链寻找参数作用域的y,打印<span class="literal">undefined</span></span><br><span class="line"> --&gt;</span><br><span class="line"><span class="keyword">var</span> x = <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x, y = x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">3</span> <span class="comment">//这里是新的变量与参数作用的x，没有关系</span></span><br><span class="line">  <span class="built_in">console</span>.log(x)  <span class="comment">//3</span></span><br><span class="line">  <span class="built_in">console</span>.log(y)  <span class="comment">//undefined</span></span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br><span class="line"><span class="built_in">console</span>.log(x)  <span class="comment">//1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第四个例子</span></span><br><span class="line">&lt;!-- 与第三个例子区别在于函数内下层作用域x没有用<span class="keyword">var</span>声明。代表的是内下层作用域的x与参数作用域的x指向同一个变量。但是函数执行后，打印的结果是一样的。</span><br><span class="line">重点在于，两个作用域对x做了不同的操作。参数作用域：&#123;<span class="keyword">let</span> x,y=x&#125;,此时x,y都等于<span class="literal">undefined</span>，接着内下层作用域对x赋值，x=<span class="number">3</span>。至此，函数的变量为x=<span class="number">3</span>，y=<span class="literal">undefined</span>。接着打印两个变量</span><br><span class="line"> --&gt;</span><br><span class="line"><span class="keyword">var</span> x = <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x, y = x</span>) </span>&#123;</span><br><span class="line">  x = <span class="number">3</span> <span class="comment">//指向参数作用域的x</span></span><br><span class="line">  <span class="built_in">console</span>.log(x)  <span class="comment">//3</span></span><br><span class="line">  <span class="built_in">console</span>.log(y)  <span class="comment">//undefined</span></span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br><span class="line"><span class="built_in">console</span>.log(x)  <span class="comment">//1</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//下面再来两个类似的例子</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第四个例子</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x, y = <span class="keyword">function</span>() &#123; x = <span class="number">2</span>; &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">3</span>;</span><br><span class="line">  y();  <span class="comment">//将参数作用域的x赋值为2，但是函数内下层作用域的x不受影响</span></span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">&#125;</span><br><span class="line">foo() <span class="comment">// 3</span></span><br><span class="line">x <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第五个例子</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x, y = <span class="keyword">function</span>() &#123; x = <span class="number">2</span>; &#125;</span>) </span>&#123;</span><br><span class="line">  x = <span class="number">3</span>;</span><br><span class="line">  y();  <span class="comment">//将x重新赋值为2</span></span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo() <span class="comment">// 2</span></span><br><span class="line">x <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="rest-参数"><a href="#rest-参数" class="headerlink" title="rest 参数"></a>rest 参数</h3><p>ES6 引入 rest 参数（形式为…变量名），用于获取函数的多余参数，这样就不需要使用 arguments 对象了。<br>arguments 是一个伪数组，rest 是一个正直的数组<br>rest 位于参数的最后，否则报错</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">(<span class="rest_arg">...values</span>)</span> </span>&#123;</span><br><span class="line">  let sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> val of values) &#123;</span><br><span class="line">    sum += val;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line">add(<span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>) <span class="comment">// 10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//报错</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(a, <span class="rest_arg">...b</span>, c)</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//函数的length属性，不包括 rest 参数。</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">(a)</span> </span>&#123;&#125;).length  <span class="comment">// 1</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">(<span class="rest_arg">...a</span>)</span> </span>&#123;&#125;).length  <span class="comment">// 0</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">(a, <span class="rest_arg">...b</span>)</span> </span>&#123;&#125;).length  <span class="comment">// 1</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="严格模式"><a href="#严格模式" class="headerlink" title="严格模式"></a>严格模式</h3><p>从 ES5 开始，函数内部可以设定为严格模式。<br>ES2016 做了一点修改，规定只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。</p>
+<h3 id="name-属性"><a href="#name-属性" class="headerlink" title="name 属性"></a>name 属性</h3><p>函数的 name 属性，返回该函数的函数名。</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> foo() &#123;&#125;</span><br><span class="line">foo.name <span class="regexp">//</span> <span class="string">&quot;foo&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>将一个匿名函数赋值给一个变量</span><br><span class="line">var f = <span class="keyword">function</span> () &#123;&#125;;</span><br><span class="line"><span class="regexp">//</span> ES5</span><br><span class="line">f.name <span class="regexp">//</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="regexp">//</span> ES6</span><br><span class="line">f.name <span class="regexp">//</span> <span class="string">&quot;f&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>将一个具名函数赋值给一个变量</span><br><span class="line">const bar = <span class="keyword">function</span> baz() &#123;&#125;;</span><br><span class="line"><span class="regexp">//</span> ES5</span><br><span class="line">bar.name <span class="regexp">//</span> <span class="string">&quot;baz&quot;</span></span><br><span class="line"><span class="regexp">//</span> ES6</span><br><span class="line">bar.name <span class="regexp">//</span> <span class="string">&quot;baz&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>Function构造函数返回的函数实例</span><br><span class="line">(new Function).name <span class="regexp">//</span> <span class="string">&quot;anonymous&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>bind返回的函数,name属性值会加上bound前缀。</span><br><span class="line"><span class="keyword">function</span> foo() &#123;&#125;;</span><br><span class="line">foo.bind(&#123;&#125;).name <span class="regexp">//</span> <span class="string">&quot;bound foo&quot;</span></span><br><span class="line">(<span class="keyword">function</span>()&#123;&#125;).bind(&#123;&#125;).name <span class="regexp">//</span> <span class="string">&quot;bound &quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><p>箭头函数使用已经足够常见了。这里记录一下，注意事项。</p>
+<figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line">// 箭头函数简写返回一个对象，需要将对象用括号包裹</span><br><span class="line"><span class="keyword">let</span> getTempItem =<span class="built_in"> id</span> =&gt; (&#123;<span class="built_in"> id</span>:<span class="built_in"> id</span>,<span class="built_in"> name</span>: <span class="string">&quot;Temp&quot;</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>箭头函数 this 指向定义该方法时所在对象的上层作用域的对象</strong><br><strong>不可以当作构造函数，也就是说，不可以使用 new 命令，否则会抛出一个错误。</strong><br><strong>不可以使用 arguments 对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。</strong><br><strong>不可以使用 yield 命令，因此箭头函数不能用作 Generator 函数。</strong></p>
+<h3 id="尾调用"><a href="#尾调用" class="headerlink" title="尾调用"></a>尾调用</h3><p>尾调用指某个函数的最后一步是调用另一个函数<br>尾调用优化指只保留内层函数的调用帧<br>只有不再用到外层函数的内部变量，内层函数的调用帧才会取代外层函数的调用帧，否则就无法进行“尾调用优化”。<br>尾调用模式仅在严格模式下生效</p>
+<h3 id="尾递归"><a href="#尾递归" class="headerlink" title="尾递归"></a>尾递归</h3><p>如果尾调用自身，就称为尾递归<br>尾递归改写形式有点难以看出怎么实现函数功能</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//正常的递归</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span><span class="params">(n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> n * factorial(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line">factorial(<span class="number">5</span>) <span class="comment">// 120</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//尾递归</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span><span class="params">(n, total)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> total;</span><br><span class="line">  <span class="keyword">return</span> factorial(n - <span class="number">1</span>, n * total);</span><br><span class="line">&#125;</span><br><span class="line">factorial(<span class="number">5</span>, <span class="number">1</span>) <span class="comment">// 120</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//箭头函数的方式改写</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span><span class="params">(n, total = 1)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> total;</span><br><span class="line">  <span class="keyword">return</span> factorial(n - <span class="number">1</span>, n * total);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">factorial(<span class="number">5</span>) <span class="comment">// 120</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="对-toString-的修改"><a href="#对-toString-的修改" class="headerlink" title="对 toString()的修改"></a>对 toString()的修改</h3><p>ES2019 对函数实例的 toString()方法做出了修改。</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span>不显示注释</span><br><span class="line"><span class="keyword">function</span> <span class="regexp">/* foo comment */</span> foo () &#123;&#125;</span><br><span class="line">foo.toString()</span><br><span class="line"><span class="regexp">//</span> <span class="keyword">function</span> foo() &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>修改后的toString()方法，明确要求返回一模一样的原始代码。</span><br><span class="line"><span class="keyword">function</span> <span class="regexp">/* foo comment */</span> foo () &#123;&#125;</span><br><span class="line">foo.toString()</span><br><span class="line"><span class="regexp">//</span> <span class="string">&quot;function /* foo comment */ foo () &#123;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="catch-命令的参数省略"><a href="#catch-命令的参数省略" class="headerlink" title="catch 命令的参数省略"></a>catch 命令的参数省略</h3><p>ES2019 做出了改变，允许 catch 语句省略参数。</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span>明确要求catch后必须带参数</span><br><span class="line">try &#123;</span><br><span class="line">  <span class="regexp">//</span> ...</span><br><span class="line">&#125; catch (err) &#123;</span><br><span class="line">  <span class="regexp">//</span> 处理错误</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>ES2019 做出了改变，允许catch语句省略参数。</span><br><span class="line">try &#123;</span><br><span class="line">  <span class="regexp">//</span> ...</span><br><span class="line">&#125; catch &#123;</span><br><span class="line">  <span class="regexp">//</span> ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>js</category>
+        <category>es6</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+        <tag>es6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>let 和 const</title>
+    <url>/2021/04/21/ES6/let%E5%92%8Cconst/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="let"><a href="#let" class="headerlink" title="let"></a>let</h3><ul>
+<li>不会提升变量</li>
+<li>不允许重复声明</li>
+<li>具有块级作用域<ul>
+<li>暂时性死区</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">console.<span class="built_in">log</span>(<span class="keyword">a</span>)</span><br><span class="line">var <span class="keyword">a</span> = <span class="number">10</span>   <span class="comment"> //10</span></span><br><span class="line"></span><br><span class="line">//不允许变量提升</span><br><span class="line">console.<span class="built_in">log</span>(<span class="keyword">a</span>)</span><br><span class="line">let <span class="keyword">a</span> = <span class="number">10</span> <span class="comment"> //报错ReferenceError</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//let 具有块级作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> n = <span class="number">5</span>;</span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> n = <span class="number">10</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(n); <span class="comment">// 5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">//不允许重复声明，报错</span><br><span class="line"><span class="keyword">let</span> <span class="attr">a</span> = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">a</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><p>const 声明一个只读的常量。一旦声明，常量的值就不能改变。</p>
+<figure class="highlight processing"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="literal">PI</span> = <span class="number">3.1415</span>;</span><br><span class="line"><span class="literal">PI</span> <span class="comment">// 3.1415</span></span><br><span class="line"></span><br><span class="line"><span class="literal">PI</span> = <span class="number">3</span>;</span><br><span class="line"><span class="comment">// TypeError: Assignment to constant variable.</span></span><br></pre></td></tr></table></figure>
+
+<p>const 声明的变量不得改变值，这意味着，const 一旦声明变量，就必须立即初始化，不能留到以后赋值。</p>
+<p><strong>本质</strong><br>const 实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动。对于简单类型的数据（数值、字符串、布尔值），值就保存在变量指向的那个内存地址，因此等同于常量。</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">const a = [];</span><br><span class="line">a.push(<span class="string">&#x27;Hello&#x27;</span>); <span class="regexp">//</span> 可执行</span><br><span class="line">a.length = <span class="number">0</span>;    <span class="regexp">//</span> 可执行</span><br><span class="line">a = [<span class="string">&#x27;Dave&#x27;</span>];    <span class="regexp">//</span> 报错</span><br></pre></td></tr></table></figure>
+
+<h3 id="顶层对象的属性"><a href="#顶层对象的属性" class="headerlink" title="顶层对象的属性"></a>顶层对象的属性</h3><p>从 ES6 开始，全局变量将逐步与顶层对象的属性脱钩。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 如果在 Node 的 REPL 环境，可以写成 global.a</span></span><br><span class="line"><span class="comment">// 或者采用通用方法，写成 this.a</span></span><br><span class="line"><span class="built_in">window</span>.a <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">window</span>.b <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>js</category>
+        <category>es6</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+        <tag>es6</tag>
       </tags>
   </entry>
 </search>
